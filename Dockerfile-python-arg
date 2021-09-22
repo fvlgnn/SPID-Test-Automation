@@ -5,19 +5,17 @@ RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable 
 RUN apt-get -y update
 RUN apt-get install -y google-chrome-stable
 
-# COPY .env .
 COPY requirements.txt .
 COPY main.py .
 
 RUN pip install --upgrade pip
 
 RUN pip install -r requirements.txt
-
-# CMD ["python", "./main.py"]
+# RUN pip install argparse
 
 # NOTE per debug
 ENTRYPOINT ["bash"]
 
 # # NOTE per live
-# CMD ["main.py" "--url", "https://tuo-webapp-url", "--metadata", "https://tuo-metadata-url", "--target", "Titolo della Pagina di login con successo"]
+# CMD ["main.py"]
 # ENTRYPOINT ["python"]

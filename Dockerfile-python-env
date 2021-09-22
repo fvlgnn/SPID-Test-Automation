@@ -5,19 +5,17 @@ RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable 
 RUN apt-get -y update
 RUN apt-get install -y google-chrome-stable
 
-# COPY .env .
+COPY .env .
 COPY requirements.txt .
 COPY main.py .
 
 RUN pip install --upgrade pip
 
 RUN pip install -r requirements.txt
+# RUN pip install python-dotenv
 
-# CMD ["python", "./main.py"]
+# #RUN pip install pipenv
+# #RUN pipenv install --skip-lock --system --dev
 
-# NOTE per debug
-ENTRYPOINT ["bash"]
-
-# # NOTE per live
-# CMD ["main.py" "--url", "https://tuo-webapp-url", "--metadata", "https://tuo-metadata-url", "--target", "Titolo della Pagina di login con successo"]
-# ENTRYPOINT ["python"]
+CMD ["main.py"]
+ENTRYPOINT ["python"]
