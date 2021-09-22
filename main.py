@@ -102,21 +102,21 @@ if "USE_ENV_VAR" in os.environ:
         is_custom_user  = os.getenv('CUSTOM_USER').lower() in yep
         logout  = os.getenv('LOGOUT').lower() in yep
 
-        test_first = os.getenv('FIRST')
-        test_last = os.getenv('LAST')
-        test_exclude = os.getenv('EXCLUDE').split()
-        test_custom = os.getenv('CUSTOM_TEST').split()
+        test_first = int(os.getenv('FIRST'))
+        test_last = int(os.getenv('LAST'))
+        test_exclude = [int(x) for x in os.getenv('EXCLUDE').split()]
+        test_custom = [int(x) for x in os.getenv('CUSTOM_TEST').split()]
 
         siteurl = os.getenv('URL')
         metadata = os.getenv('META')
         target_page_title = os.getenv('TARGET')
 
-        spid_level = os.getenv('LEVEL')
+        spid_level = int(os.getenv('LEVEL'))
 
         fiscal_number = os.getenv('FISCAL_NUMBER')
         email = os.getenv('EMAIL')
 
-        delay = os.getenv('DELAY')
+        delay = int(float(os.getenv('DELAY')))
 
 #  ----
 
@@ -167,7 +167,7 @@ def main():
             logme(f"siteurl: {siteurl}")
             logme(f"metadata: {metadata}")
             logme(f"target_page_title: {target_page_title}")
-            logme(f"spid_level: {spid_level}")
+            logme(f"spid_level: {spid_level}\n")
             logme("End Show Configurations\n")
 
         logme(f"TEST Started ({datetime.now()}) **** ---- **** ---- **** ---- **** ----\n")           

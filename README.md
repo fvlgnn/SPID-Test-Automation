@@ -106,12 +106,14 @@ Il comando sopra lancia l'automatizzazione dei test cercando la webapp e preleva
 
 All'interno di un container Docker.
 
-- `docker build -t spid-test-automation` o con Dockerfile personalizzato es. `docker build -f Dockerfile-python-env -t spid-test-automation`
+- `docker build -t spid-test-automation`
 - `docker run -it spid-test-automation`
 
-Per vedere l'output dal container.
+Per creare un container che utilizza le variabili d'ambiente (assicurarsi che esista il file `.env`) ed eseguire i seguenti comandi.
 
-Immagine sul registry docker
+- `docker build -f .\Dockerfile-python-env -t spid-test-automation-python-env .`
+- `docker run -it spid-test-automation-python-env` 
+
 
 Per altre informazioni si consiglia di consultare la documentazione ufficiale di Docker
 
@@ -122,7 +124,6 @@ Per altre informazioni si consiglia di consultare la documentazione ufficiale di
 - eseguire la build `docker build -f Dockerfile-openshift-jenkins-slave -t spid-test-automation`
 - assegnare un tag all'immagine `docker image tag spid-test-automation nome-del-tuo-registry/spid-test-automation:latest`
 - caricare l'immagine su un docker registry `docker push nome-del-tuo-registry/spid-test-automation:latest`
-
 
 - configurare l'orchestratore per utilizzare l'immagine
 - configurare i parametri della pipline di Jenkins esempio di seguito 
