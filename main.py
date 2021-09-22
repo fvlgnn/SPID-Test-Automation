@@ -90,7 +90,7 @@ delay = args.delay
 
 # siteurl = os.environ('URL')
 # ...
-# delay = os.getenv('DELAY')
+# delay = os.environ('DELAY')
 
 #  ----
 
