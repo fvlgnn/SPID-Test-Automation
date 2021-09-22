@@ -31,13 +31,14 @@ from selenium.common.exceptions import TimeoutException
 from time import sleep
 from datetime import datetime
 
+import argparse
+from dotenv import load_dotenv
+
 urllib3.disable_warnings()
 
-yep = ['true', '1', 't', 'y', 'yes', 'yep', 'ok', 'si', 'sì', 's']
+yep = ['true', '1', 't', 'y', 'yes', 'yep', 'ok', 'si', 'sì', 's', 'vero', 'vera', 'v', 'de', 'dè']
 
 #NOTE CONFIG WITH ARGS ----
-
-import argparse
 
 parser = argparse.ArgumentParser(
     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -47,9 +48,9 @@ parser.add_argument('--last', type=int, default=111, help="Test di arrivo", requ
 parser.add_argument('--exclude', type=int, default=[5,6,7,50,101,102], nargs='+', help="Test da escludere (es. 5 6 7). Di default i test che AgID non verifica", required=False)
 parser.add_argument('--custom-test', type=int, nargs='+', help="Esegue solo i test nella lista (es. 1 32 94 95 96 111)", required=False)
 
-parser.add_argument('--url', type=str, default='https://tua-webapp-con-login-spid.tld', help="URL di partenza", required=False)
-parser.add_argument('--meta', type=str, default='https://tuo-service-provider-dove-leggere-il-metadata-spid.tld/spid-sp-metadata', help="URL del metadata del SP", required=False)
-parser.add_argument('--target', type=str, default='TestSpidWebApp', help="HTML <title> della pagina di destinazione", required=False)
+parser.add_argument('--url', type=str, default='https://localhost:8443', help="URL di partenza, la webapp con integrato il login con SPID", required=False)
+parser.add_argument('--meta', type=str, default='https://localhost:8443/spid-sp-metadata', help="URL del metadata del tuo SP", required=False)
+parser.add_argument('--target', type=str, default='TestSpidWebAppLoggedIn', help="HTML <title> della pagina di destinazione", required=False)
 
 parser.add_argument('--custom-user', type=str, default='false', help="True modifica CF e Email nella Response come --cf e --email, False come da test.json", required=False)
 parser.add_argument('--fiscal-number', type=str, default='TINIT-GDASDV00A01H501J', help="Codice fiscale con prefisso TINIT- dell'utente di test", required=False)
@@ -86,21 +87,36 @@ delay = args.delay
 
 #  ----
 
-# TODO CONFIG WITH SYSTEM ENVIRONMENT ----
+#NOTE CONFIG WITH DOT-ENV or SYSTEM ENVIRONMENT (Questo potrebbe sovrascrive alcuni ARGS) ----
 
-# siteurl = os.environ('URL')
-# ...
-# delay = os.environ('DELAY')
+load_dotenv()
 
-#  ----
+if "USE_ENV_VAR" in os.environ:
 
-# TODO CONFIG WITH DOT-ENV ----
+    use_env_var = os.getenv('USE_ENV_VAR').lower() in yep
 
-# from dotenv import load_dotenv
-# load_dotenv()
-# siteurl = os.getenv('URL')
-# ...
-# delay = os.getenv('DELAY')
+    if use_env_var:
+
+        write_logs = os.getenv('LOGS').lower() in yep
+        is_container = os.getenv('CONTAINER').lower() in yep
+        is_custom_user  = os.getenv('CUSTOM_USER').lower() in yep
+        logout  = os.getenv('LOGOUT').lower() in yep
+
+        test_first = os.getenv('FIRST')
+        test_last = os.getenv('LAST')
+        test_exclude = os.getenv('EXCLUDE').split()
+        test_custom = os.getenv('CUSTOM_TEST').split()
+
+        siteurl = os.getenv('URL')
+        metadata = os.getenv('META')
+        target_page_title = os.getenv('TARGET')
+
+        spid_level = os.getenv('LEVEL')
+
+        fiscal_number = os.getenv('FISCAL_NUMBER')
+        email = os.getenv('EMAIL')
+
+        delay = os.getenv('DELAY')
 
 #  ----
 
@@ -140,7 +156,7 @@ def main():
 
         next = True
 
-        if test_custom is None:
+        if test_custom is None or test_custom != 0:
             tests = [i for i in range(test_first, test_last + 1) if i not in test_exclude]
         else:
             tests = test_custom
