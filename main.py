@@ -86,7 +86,7 @@ delay = args.delay
 
 #  ----
 
-# TODO CONFIG WITH DOT-ENV ----
+# TODO CONFIG WITH SYSTEM ENVIRONMENT ----
 
 # siteurl = os.environ('URL')
 # ...
@@ -94,7 +94,7 @@ delay = args.delay
 
 #  ----
 
-# TODO CONFIG WITH SYSTEM ENVIRONMENT ----
+# TODO CONFIG WITH DOT-ENV ----
 
 # from dotenv import load_dotenv
 # load_dotenv()
