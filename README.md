@@ -112,8 +112,13 @@ All'interno di un container Docker.
 Per creare un container che utilizza le variabili d'ambiente (assicurarsi che esista il file `.env`) ed eseguire i seguenti comandi.
 
 - `docker build -f .\Dockerfile-python-env -t spid-test-automation-python-env .`
-- `docker run -it spid-test-automation-python-env` 
+- `docker run -it spid-test-automation-python-env`
 
+Per debug si consiglia di avviare il container montando il file `main.py` da filesystem a container. Eseguire la build utilizzando il `Dockerfile` ed eseguire il seguente comando _run_.
+
+- `docker run --mount type=bind,source="$(pwd)"/main.py,target=/main.py -it spid-test-automation`
+
+In questo modo si accede all'interno del container tramite _ENTRYPOINT_ `bash` ed è possibile modificare il file `main.py` in modo tale che le modifiche apportate possono essere verificate dopo il salvataggio senza la necessità di dover eseguire una nuova _docker build_.
 
 Per altre informazioni si consiglia di consultare la documentazione ufficiale di Docker
 

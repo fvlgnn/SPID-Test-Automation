@@ -12,6 +12,8 @@ COPY main.py .
 RUN pip install --upgrade pip
 
 RUN pip install -r requirements.txt
+# RUN pip install argparse
+# RUN pip install python-dotenv
 
 # CMD ["python", "./main.py"]
 
