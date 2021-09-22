@@ -1,4 +1,4 @@
-# SPID Test Automation
+# SPID SAML Check Test Automation
 Automatizzazione dei test AgID del simulatore Identity Provider _IdP_ [SPID SAML Check](https://github.com/italia/spid-saml-check) per l'integrazione di SPID.
 
 
@@ -38,20 +38,25 @@ I parametri personalizzabili del sistema possono essere passati tramite argoment
 
 ### Parametri
 
-Paramenti delle variabili per i test.
+Paramenti delle variabili per i test. I parametri possono essere passati allo script tramite argomenti/switch o tramite file .env o tramite variabili d'ambiente di sistema.
+
+Di default vengono lette le variabili degli argomenti, in caso non siano impostati vengono usati i valori di default. Per dettagli vedi --help o vedi sottosezione [Argomenti](#argomenti). 
+
+Se si desidera utilizzare passare le variabili d'ambiente tramite file `.env` o tramite sistema, usare come esempio il file `.env.example`. Per dettagli vedi sottosezione [Environment Variabile](#environment-variabile).
+
 
 #### Argomenti
 
-Eseguire lo script passando o meno i seguenti argomenti.
+Eseguire lo script passando o meno i seguenti argomenti. Nel caso non vengano passati gli argomenti verranno utilizzati i valori di default.
 
     -h, --help                                  show this help message and exit
     --first FIRST                               Test di partenza (default: 1)
     --last LAST                                 Test di arrivo (default: 111)
     --exclude EXCLUDE [EXCLUDE ...]             Test da escludere (es. 5 6 7). Di default i test che AgId non verifica (default: [5, 6, 7, 50, 101, 102])
     --custom-test CUSTOM_TEST [CUSTOM_TEST ...] Esegue solo i test nella lista (es. 32 94 95 96 111) (default: None)
-    --url URL                                   URL di partenza (default: https://tua-webapp-con-login-spid.tld)
-    --meta META                                 URL del metadata del SP (default: https://tuo-service-provider-dove-leggere-il-metadata-spid.tld/spid-sp-metadata)
-    --target TARGET                             HTML <title> della pagina di destinazione (default: TestSpidWebApp)
+    --url URL                                   URL di partenza, la webapp con integrato il login con SPID (default: https://localhost:8443)
+    --meta META                                 URL del metadata del tuo SP (default: https://localhost:8443/spid-sp-metadata)
+    --target TARGET                             HTML <title> della pagina di destinazione (default: TestSpidWebAppLoggedIn)
     --custom-user CUSTOM_USER                   True modifica CF e Email nella Response vedi --cf e --email, False come da test.json (default: false)
     --fiscal-number FISCAL_NUMBER               Codice fiscale con prefisso TINIT- dell'utente di test (default: TINIT-GDASDV00A01H501J)
     --email EMAIL                               Email dell'utente di test (default: spid.tech@agid.gov.it)
@@ -66,15 +71,13 @@ In particolare `--container` usa chrome in modalità _headless_, _no-sandbox_, d
 **Nota Bene!** Per prime istallazioni e/o debug è consigliabile eseguire lo script direttamente tramite python e impostando lo switch `--container false`. NON USARE l'argomento _container false_ all'interno di un container o di un orchestratore, non potrà funzionare. Per l'ambiente di sviluppo è consigliabile usare il _virtual environments venv_ di python, vedi https://docs.python.org/3/library/venv.html.
 
 
-#### System Environment
+#### Environment Variabile
 
-TODO
+Usare variabili tramite file `.env` o tramite variabili d'ambiente di sistema. Utilizzando le variabili d'ambiente i valori di alcuni o di tutti gli [argomenti](#argomenti) _args_ verranno sovrascritti. 
 
+Se si desidera utilizzare passare le variabili d'ambiente tramite file `.env` o tramite sistema, usare come esempio il file `.env.example`, creando un file `.env` per l'appunto e modificare i valori delle variabili.
 
-#### Dot-Env (Variabili da file `.env`)
-
-TODO
-
+**Nota Bene!** Se si desidera utilizzare le variabili d'ambiente al posto degli argomenti è molto importante impostare all'interno del file `.env` o all'interno del sistema la variabile _USE_ENV_VAR_ a vera come segue `USE_ENV_VAR=true`.
 
 
 ### Esempi pratici
@@ -93,10 +96,11 @@ Esegue i test come da parametri di default. **Nota Bene!** Se non sono state app
 
 Il comando sopra lancia l'automatizzazione dei test dal 44 al 60, con un delay tra un operazione e l'altra di un secondo e mezzo, dove _Pagina di Test_ è il titolo HTML compreso nel tag _<title></title>_ della pagina di arrivo dopo aver effettuato l'accesso e sulla _Response_ del validatore viene modificato _fiscalNumber_ (--fiscal-number) e _email_ (--email) come da parametri di default.
 
-- `python3 main.py --url https://localhost:8080 --meta https://localhost:8081/metadata.xml --container false --logs true --custom-test 1 94 95 96 111`
+- `python3 main.py --url https://localhost:8081 --meta https://localhost:8081/metadata.xml --container false --logs true --custom-test 1 94 95 96 111`
 
-Il comando sopra lancia l'automatizzazione dei test in localhost (verificare che SPID SAML Check stia girando in locale), prelevando il metadata da una web app in locale che gira sulla porta 8081, visualizzando il browser, scrivendo i logs - all'interno della cartella _logs_ e verificando solo i test _1, 94, 95, 96, 111_.
+Il comando sopra lancia l'automatizzazione dei test cercando la webapp e prelevando il metadata in localhost sulla porta 8081, visualizzando il browser, scrivendo i logs - all'interno della cartella _logs_ e verificando solo i test _1, 94, 95, 96, 111_.
 
+**Nota Bene!** _SPID SAML Check_ di default in locale gira sulla porta `8080` quindi la webapp con il login di SPID localmente deve girare su altra porta. Nell'esempio sopra sulla `8081`.
 
 #### Docker
 
