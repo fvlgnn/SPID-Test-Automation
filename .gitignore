@@ -1,3 +1,15 @@
+# Personal Dev
+venv/
+.vscode/
+.env
+*.logs
+*.log
+test.py
+temp/
+reports/
+drivers/
+examples/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
