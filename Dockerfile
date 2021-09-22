@@ -5,7 +5,7 @@ RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable 
 RUN apt-get -y update
 RUN apt-get install -y google-chrome-stable
 
-# COPY .env .
+COPY .env* .
 COPY requirements.txt .
 COPY main.py .
 

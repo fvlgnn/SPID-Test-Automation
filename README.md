@@ -42,7 +42,7 @@ Paramenti delle variabili per i test. I parametri possono essere passati allo sc
 
 Di default vengono lette le variabili degli argomenti, in caso non siano impostati vengono usati i valori di default. Per dettagli vedi --help o vedi sottosezione [Argomenti](#argomenti). 
 
-Se si desidera utilizzare passare le variabili d'ambiente tramite file `.env` o tramite sistema, usare come esempio il file `.env.example`. Per dettagli vedi sottosezione [Environment Variabile](#environment-variabile).
+Se si desidera utilizzare passare le variabili d'ambiente tramite file `.env` o tramite sistema, usare come esempio il file `.env.example`. Per dettagli vedi sottosezione [Variabili Ambiente](#variabili-ambiente).
 
 
 #### Argomenti
@@ -71,7 +71,7 @@ In particolare `--container` usa chrome in modalità _headless_, _no-sandbox_, d
 **Nota Bene!** Per prime istallazioni e/o debug è consigliabile eseguire lo script direttamente tramite python e impostando lo switch `--container false`. NON USARE l'argomento _container false_ all'interno di un container o di un orchestratore, non potrà funzionare. Per l'ambiente di sviluppo è consigliabile usare il _virtual environments venv_ di python, vedi https://docs.python.org/3/library/venv.html.
 
 
-#### Environment Variabile
+#### Variabili Ambiente
 
 Usare variabili tramite file `.env` o tramite variabili d'ambiente di sistema. Utilizzando le variabili d'ambiente i valori di alcuni o di tutti gli [argomenti](#argomenti) _args_ verranno sovrascritti. 
 
@@ -104,7 +104,7 @@ Il comando sopra lancia l'automatizzazione dei test cercando la webapp e preleva
 
 #### Docker
 
-All'interno di un container Docker.
+Usare il sistema all'interno di un container Docker, attenzione a verificare l'esistenza o meno del file `.env`, vedi sezione [Argomenti](#argomenti) e [Variabili Ambiente](#variabili-ambiente).
 
 - `docker build -t spid-test-automation`
 - `docker run -it spid-test-automation`
