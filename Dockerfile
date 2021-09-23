@@ -17,19 +17,19 @@ RUN pip install -r requirements.txt
 
 #### #### NOTE LIVE #### ####
 
-# NOTE usando variabili da arg
-# CMD ["main.py" "--url", "https://tuo-webapp-url", "--meta", "https://tuo-metadata-url/metadata", "--target", "Titolo Pagina Login corretto"]
+# usa variabili da arg
+# CMD ["main.py", "--url", "https://tuo-webapp-url", "--meta", "https://tuo-metadata-url/metadata", "--target", "Titolo Pagina Login corretto"]
 
-# NOTE  usando variabili da env
+# OPPURE
+
+# usa variabili da env
 # CMD ["main.py"]
 
-# NOTE per live
 # ENTRYPOINT ["python"]
 
 
 #### #### NOTE DEBUG #### ####
 
-# NOTE per debug
 ENTRYPOINT ["bash"]
 
 
