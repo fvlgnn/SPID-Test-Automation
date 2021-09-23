@@ -156,7 +156,7 @@ def main():
 
     try:
 
-        next = True
+        run = True
 
         if test_custom is None or test_custom[0] == 0:
             tests = [i for i in range(test_first, test_last + 1) if i not in test_exclude]
@@ -176,7 +176,7 @@ def main():
 
         for test in tests:
 
-            if next:
+            if run:
 
                 chrome_options = webdriver.ChromeOptions()
                 chrome_options.add_argument("incognito")
@@ -216,7 +216,7 @@ def main():
                         WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Username"]')))
                     except TimeoutException:
                        logme(f"TEST {test} - Timeout SPID Validator IdP", "error")
-                       next = False
+                       run = False
 
                     sleep(delay)
                     driver.find_element_by_xpath('//input[@placeholder="Username"]').click()
@@ -341,7 +341,7 @@ def main():
 
                 except NoSuchElementException as err:
                     logme("TEST " + str(test) + " " + str(err).splitlines()[0], "error")
-                    next = False
+                    run = False
             
                 driver.quit()
 
