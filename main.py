@@ -38,6 +38,8 @@ urllib3.disable_warnings()
 
 yep = ['true', '1', 't', 'y', 'yes', 'yep', 'ok', 'si', 'sì', 's', 'vero', 'vera', 'v', 'de', 'dè']
 
+use_env_var = False
+
 #NOTE CONFIG WITH ARGS ----
 
 parser = argparse.ArgumentParser(
@@ -161,16 +163,16 @@ def main():
         else:
             tests = test_custom
 
-        if is_container:
-            logme("Integration Tests Configurations\n")
-            logme(f"tests: {tests}")
-            logme(f"siteurl: {siteurl}")
-            logme(f"metadata: {metadata}")
-            logme(f"target_page_title: {target_page_title}")
-            logme(f"spid_level: {spid_level}\n")
-            logme("End Show Configurations\n")
+        logme("#### #### #### #### Integration Tests Configurations #### #### #### ####")
+        logme(f"variables by: {('ARG', 'ENV')[use_env_var]}")
+        logme(f"tests: {tests}")
+        logme(f"siteurl: {siteurl}")
+        logme(f"metadata: {metadata}")
+        logme(f"target_page_title: {target_page_title}")
+        logme(f"spid_level: {spid_level}")
+        logme("#### #### #### #### End Show Configurations #### #### #### ####\n")
 
-        logme(f"TEST Started ({datetime.now()}) **** ---- **** ---- **** ---- **** ----\n")           
+        logme(f"#### #### #### #### TEST Started ({datetime.now()}) #### #### #### ####\n")           
 
         for test in tests:
 
@@ -347,7 +349,7 @@ def main():
         logme(e, 'error')
     finally:
         # driver.quit()
-        logme(f"TEST Finished ({datetime.now()}) **** ---- **** ---- **** ---- **** ----\n\n")
+        logme(f"#### #### #### #### TEST Finished ({datetime.now()}) #### #### #### ####\n")
         sleep(delay * 2)
         sys.exit()
 
