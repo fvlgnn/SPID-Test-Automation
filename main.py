@@ -158,7 +158,7 @@ def main():
 
         next = True
 
-        if test_custom is None or test_custom != 0:
+        if test_custom is None or test_custom[0] == 0:
             tests = [i for i in range(test_first, test_last + 1) if i not in test_exclude]
         else:
             tests = test_custom
