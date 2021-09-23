@@ -118,7 +118,7 @@ if "USE_ENV_VAR" in os.environ:
         fiscal_number = os.getenv('FISCAL_NUMBER')
         email = os.getenv('EMAIL')
 
-        delay = int(float(os.getenv('DELAY')))
+        delay = float(os.getenv('DELAY'))
 
 #  ----
 
