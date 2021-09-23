@@ -49,22 +49,32 @@ Se si desidera utilizzare passare le variabili d'ambiente tramite file `.env` o 
 
 Eseguire lo script passando o meno i seguenti argomenti. Nel caso non vengano passati gli argomenti verranno utilizzati i valori di default.
 
-    -h, --help                                  show this help message and exit
-    --first FIRST                               Test di partenza (default: 1)
-    --last LAST                                 Test di arrivo (default: 111)
-    --exclude EXCLUDE [EXCLUDE ...]             Test da escludere (es. 5 6 7). Di default i test che AgId non verifica (default: [5, 6, 7, 50, 101, 102])
-    --custom-test CUSTOM_TEST [CUSTOM_TEST ...] Esegue solo i test nella lista (es. 32 94 95 96 111) (default: None)
-    --url URL                                   URL di partenza, la webapp con integrato il login con SPID (default: https://localhost:8443)
-    --meta META                                 URL del metadata del tuo SP (default: https://localhost:8443/spid-sp-metadata)
-    --target TARGET                             HTML <title> della pagina di destinazione (default: TestSpidWebAppLoggedIn)
-    --custom-user CUSTOM_USER                   True modifica CF e Email nella Response vedi --cf e --email, False come da test.json (default: false)
-    --fiscal-number FISCAL_NUMBER               Codice fiscale con prefisso TINIT- dell'utente di test (default: TINIT-GDASDV00A01H501J)
-    --email EMAIL                               Email dell'utente di test (default: spid.tech@agid.gov.it)
-    --level LEVEL                               Livello SPID. Usa 1, 2 o 3 (default: 1)
-    --delay DELAY                               Tempo tra un'azione e l'altra (default: 0.4)
-    --logout LOGOUT                             True, forza il logout se la sessione è attiva (default: true)
-    --container CONTAINER                       True se eseguito da dentro un container, False visualizza il browser all'utente per debug (default: true)
-    --logs LOGS                                 False per live usa stdout, True per debug scrive logs su FS (default: false)
+
+    usage: main.py [-h] [--first FIRST] [--last LAST] [--exclude EXCLUDE [EXCLUDE ...]] [--custom-test CUSTOM_TEST [CUSTOM_TEST ...]] [--url URL] [--meta META] [--target TARGET] [--custom-user CUSTOM_USER] [--fiscal-number FISCAL_NUMBER] [--email EMAIL] [--level LEVEL] [--delay DELAY] [--logout LOGOUT] [--container CONTAINER] [--logs LOGS]
+
+    optional arguments:
+    -h, --help              show this help message and exit
+    --first FIRST           Test di partenza (default: 1)
+    --last LAST             Test di arrivo (default: 111)
+    --exclude EXCLUDE [EXCLUDE ...]
+                            Test da escludere (es. 5 6 7). Di default i test che AgID non verifica (default: [5, 6, 7, 50, 101, 102])
+    --custom-test CUSTOM_TEST [CUSTOM_TEST ...]
+                            Esegue solo i test nella lista (es. 1 32 94 95 96 111) (default: None)
+    --url URL               URL di partenza, la webapp con integrato il login con SPID (default: https://localhost:8443)
+    --meta META             URL del metadata del tuo SP (default: https://localhost:8443/spid-sp-metadata)
+    --target TARGET         HTML <title> della pagina di destinazione (default: TestSpidWebAppLoggedIn)
+    --custom-user CUSTOM_USER
+                            True modifica CF e Email nella Response come --cf e --email, False come da test.json (default: false)
+    --fiscal-number FISCAL_NUMBER
+                            Codice fiscale con prefisso TINIT- dell'utente di test (default: TINIT-GDASDV00A01H501J)
+    --email EMAIL           Email dell'utente di test (default: spid.tech@agid.gov.it)
+    --level LEVEL           Livello SPID. Usa 1, 2 o 3 (default: 1)
+    --delay DELAY           Tempo tra un'azione e l'altra (default: 0.4)
+    --logout LOGOUT         True, forza il logout se la sessione è attiva (default: true)
+    --container CONTAINER
+                            True se eseguito da dentro un container, False visualizza il browser all'utente per debug (default: true)
+    --logs LOGS             False per live usa stdout, True per debug scrive logs su FS (default: false)
+
 
 In particolare `--container` usa chrome in modalità _headless_, _no-sandbox_, disabilitando la gpu e altre cose che servono per far girare chrome dentro un container. 
 
