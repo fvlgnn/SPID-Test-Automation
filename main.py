@@ -144,9 +144,6 @@ def logme(message, level = 'info'):
     else:
         log = str(datetime.now()) + ': ' + str(level.upper()) + ' - ' + str(message)        
     print(log)
-    # if is_container:
-    #     # sys.stdout = open(1, 'w', encoding='utf-8', closed=False)
-    #     sys.stdout.flush()
 
 # ----
 
