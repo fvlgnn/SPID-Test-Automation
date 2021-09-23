@@ -13,5 +13,6 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 # RUN pip install argparse
 
-CMD ["main.py"]
+# CMD ["main.py"]
+CMD ["main.py" "--url", "https://tuo-webapp-url", "--meta", "https://tuo-metadata-url/metadata", "--target", "Titolo Pagina Login corretto"]
 ENTRYPOINT ["python"]

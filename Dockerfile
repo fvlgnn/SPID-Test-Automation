@@ -15,11 +15,21 @@ RUN pip install -r requirements.txt
 # RUN pip install argparse
 # RUN pip install python-dotenv
 
-# CMD ["python", "./main.py"]
+#### #### NOTE LIVE #### ####
+
+# NOTE usando variabili da arg
+# CMD ["main.py" "--url", "https://tuo-webapp-url", "--meta", "https://tuo-metadata-url/metadata", "--target", "Titolo Pagina Login corretto"]
+
+# NOTE  usando variabili da env
+# CMD ["main.py"]
+
+# NOTE per live
+# ENTRYPOINT ["python"]
+
+
+#### #### NOTE DEBUG #### ####
 
 # NOTE per debug
 ENTRYPOINT ["bash"]
 
-# # NOTE per live
-# CMD ["main.py" "--url", "https://tuo-webapp-url", "--metadata", "https://tuo-metadata-url", "--target", "Titolo della Pagina di login con successo"]
-# ENTRYPOINT ["python"]
+

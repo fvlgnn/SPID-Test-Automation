@@ -36,7 +36,7 @@ I parametri personalizzabili del sistema possono essere passati tramite argoment
 **Nota Bene!** Sicuramente all'interno dello script principale `main.py`, alcuni tags HTML che utilizza Selenium per catturare le sezioni della WebApp personale, in modo tale da simulare le azioni di login, andranno modificati, mentre quelli inerenti al validatore _SPID SAML Check_ sono configurati in modo tale da non richiedere ulteriori modifiche.
 
 
-### Parametri
+## Parametri e Variabili
 
 Paramenti delle variabili per i test. I parametri possono essere passati allo script tramite argomenti/switch o tramite file .env o tramite variabili d'ambiente di sistema.
 
@@ -45,7 +45,7 @@ Di default vengono lette le variabili degli argomenti, in caso non siano imposta
 Se si desidera utilizzare passare le variabili d'ambiente tramite file `.env` o tramite sistema, usare come esempio il file `.env.example`. Per dettagli vedi sottosezione [Variabili Ambiente](#variabili-ambiente).
 
 
-#### Argomenti
+### Argomenti
 
 Eseguire lo script passando o meno i seguenti argomenti. Nel caso non vengano passati gli argomenti verranno utilizzati i valori di default.
 
@@ -81,7 +81,7 @@ In particolare `--container` usa chrome in modalità _headless_, _no-sandbox_, d
 **Nota Bene!** Per prime istallazioni e/o debug è consigliabile eseguire lo script direttamente tramite python e impostando lo switch `--container false`. NON USARE l'argomento _container false_ all'interno di un container o di un orchestratore, non potrà funzionare. Per l'ambiente di sviluppo è consigliabile usare il _virtual environments venv_ di python, vedi https://docs.python.org/3/library/venv.html.
 
 
-#### Variabili Ambiente
+### Variabili Ambiente
 
 Usare variabili tramite file `.env` o tramite variabili d'ambiente di sistema. Utilizzando le variabili d'ambiente i valori di alcuni o di tutti gli [argomenti](#argomenti) _args_ verranno sovrascritti. 
 
@@ -90,11 +90,11 @@ Se si desidera utilizzare passare le variabili d'ambiente tramite file `.env` o 
 **Nota Bene!** Se si desidera utilizzare le variabili d'ambiente al posto degli argomenti è molto importante impostare all'interno del file `.env` o all'interno del sistema la variabile _USE_ENV_VAR_ a vera come segue `USE_ENV_VAR=true`.
 
 
-### Esempi pratici
+## Esempi pratici
 
 Lista di comandi da eseguire in base al sistema in uso con esempi pratici e spiegazioni.
 
-#### Python
+### Python
 
 Direttamente tramite python.
 
@@ -112,7 +112,16 @@ Il comando sopra lancia l'automatizzazione dei test cercando la webapp e preleva
 
 **Nota Bene!** _SPID SAML Check_ di default in locale gira sulla porta `8080` quindi la webapp con il login di SPID localmente deve girare su altra porta. Nell'esempio sopra sulla `8081`.
 
-#### Docker
+### Docker
+
+In questo repository sono presenti 4 _Dockerfile_ dai quali può essere costruita l'immagine. Segue breve descrizione del contenuto.
+
+- **`Dockerfile`**: di default una volta eseguita la build ed eseguito il run entra direttamente nel terminale `bash` del container. Al suo interno sono presenti step per la build commentati in modo tale da prendere spunto per eventuali personalizzazioni. Vedi [Python](#python) e [Parametri e Variabili](#parametri-e-variabili).
+- **`Dockerfile-python-arg`**: di default una volta eseguita la build ed eseguito il run, viene avviato direttamente lo script con i parametri riportati nello step `CMD`. Per funzionare sicuramente necessita di essere personalizzato. Vedi la sezione [Argomenti](#argomenti).
+- **`Dockerfile-python-env`**: di default una volta eseguita la build ed eseguito il run, viene avviato direttamente lo script con le variabili lette dal file `.env`. Assicurarsi che il file esista e sia configurato correttamente con i parametri desiderati, inoltre è importate che nel file sia riportata la variabile `USE_ENV_VAR=true`. Vedi la sezione [Variabili Ambiente](#variabili-ambiente).
+- **`Dockerfile-openshift-jenkins-salve`**: da utilizzare solo se si dispone di un Openshift/Kubernates e si hanno competenze DevOps. L'immagine creata può essere caricata nel cluster ed essere avviata tramite Build. Viene creato un pod con Jenkins che esegue la pipeline come da configurazione personale, tale pod effettua i test come da script `main.py`. L'output di Jenkins richiede alcuni minuti prima che venga riportato a video. Vedi la sezione [Jenkins Slave su Openshift / Kubernates](#jenkins-slave-su-openshift-kubernates).
+
+#### Alcuni esempi
 
 Usare il sistema all'interno di un container Docker, attenzione a verificare l'esistenza o meno del file `.env`, vedi sezione [Argomenti](#argomenti) e [Variabili Ambiente](#variabili-ambiente).
 
@@ -130,7 +139,7 @@ Per debug si consiglia di avviare il container montando il file `main.py` da fil
 
 In questo modo si accede all'interno del container tramite _ENTRYPOINT_ `bash` ed è possibile modificare il file `main.py` in modo tale che le modifiche apportate possono essere verificate dopo il salvataggio senza la necessità di dover eseguire una nuova _docker build_.
 
-Per altre informazioni si consiglia di consultare la documentazione ufficiale di Docker
+Per altre informazioni in merito al mondo dei container si consiglia di consultare la documentazione ufficiale di [Docker](https://docker.com).
 
 
 #### Jenkins Slave su Openshift / Kubernates 
