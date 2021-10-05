@@ -63,6 +63,8 @@ Eseguire lo script passando o meno i seguenti argomenti. Nel caso non vengano pa
     --url URL               URL di partenza, la webapp con integrato il login con SPID (default: https://localhost:8443)
     --meta META             URL del metadata del tuo SP (default: https://localhost:8443/spid-sp-metadata)
     --target TARGET         HTML <title> della pagina di destinazione (default: TestSpidWebAppLoggedIn)
+    --target-unauthorized TARGET_UNAUTHORIZED   
+                            HTML <title> della pagina per utente senza privilegi (default: Errore - Utente Non Autorizzato)
     --custom-user CUSTOM_USER
                             True modifica CF e Email nella Response come --cf e --email, False come da test.json (default: false)
     --fiscal-number FISCAL_NUMBER

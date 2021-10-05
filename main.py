@@ -53,6 +53,7 @@ parser.add_argument('--custom-test', type=int, nargs='+', help="Esegue solo i te
 parser.add_argument('--url', type=str, default='https://localhost:8443', help="URL di partenza, la webapp con integrato il login con SPID", required=False)
 parser.add_argument('--meta', type=str, default='https://localhost:8443/spid-sp-metadata', help="URL del metadata del tuo SP", required=False)
 parser.add_argument('--target', type=str, default='TestSpidWebAppLoggedIn', help="HTML <title> della pagina di destinazione", required=False)
+parser.add_argument('--target-unauthorized', type=str, default='Errore - Utente Non Autorizzato', help="HTML <title> della pagina per utente senza privilegi", required=False)
 
 parser.add_argument('--custom-user', type=str, default='false', help="True modifica CF e Email nella Response come --cf e --email, False come da test.json", required=False)
 parser.add_argument('--fiscal-number', type=str, default='TINIT-GDASDV00A01H501J', help="Codice fiscale con prefisso TINIT- dell'utente di test", required=False)
@@ -79,6 +80,7 @@ test_custom = args.custom_test
 siteurl = args.url
 metadata = args.meta
 target_page_title = args.target
+target_unauthorized_title = args.target_unauthorized
 
 spid_level = args.level
 
@@ -313,19 +315,28 @@ def main():
                         if test in range(94,97):
                             spid_log_msg = f"\nSPID Level set for test: {spid_level}"
                         if key_result == "ok" or key_result == "request.":
-                            if title_page == target_page_title or title_page == "Error - Utente Non Autorizzato":
+                            if title_page == target_page_title or title_page == target_unauthorized_title:
                                 logme(f"TEST_{test:03}\nTest description: {expected_result}{spid_log_msg}\nResult: Web App (Title page: {title_page})\n", "passed")
                                 #NOTE PERSONALIZZAZIONE. Da modificare in base alla propria webapp
-                                if title_page == target_page_title and logout:
-                                    try:
-                                        WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, '//button[@id="dropdownMenuButton"]')))
-                                        sleep(delay)
-                                        driver.find_element_by_xpath('//button[@id="dropdownMenuButton"]').click()
-                                        sleep(delay)
-                                        driver.find_element_by_xpath("//a[text()='Logout']").click()
-                                        sleep(delay * 2)
-                                    except TimeoutException:
-                                        pass
+                                if logout:
+                                    if title_page == target_page_title:
+                                        try:
+                                            WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, '//button[@id="dropdownMenuButton"]')))
+                                            sleep(delay)
+                                            driver.find_element_by_xpath('//button[@id="dropdownMenuButton"]').click()
+                                            sleep(delay)
+                                            driver.find_element_by_xpath("//a[text()='Logout']").click()
+                                            sleep(delay * 2)
+                                        except TimeoutException:
+                                            pass
+                                    if title_page == target_unauthorized_title:
+                                        try:
+                                            WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, '//a[@id="logout"]')))
+                                            sleep(delay)
+                                            driver.find_element_by_xpath('//a[@id="logout"]').click()
+                                            sleep(delay * 2)
+                                        except TimeoutException:
+                                            pass
                                 #NOTE fine PERSONALIZZAZIONE.
                             else:
                                 logme(f"TEST_{test:03}\nTest description: {expected_result}{spid_log_msg}\nTitle page: {title_page}\n", 'not passed')
