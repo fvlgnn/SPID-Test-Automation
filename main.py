@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# -*- -*- -*- -*- -*- -*- -*- -*- -*- -*-
+# ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 #
 # Copyright (c) 2021 Gianni Favilli @fvlgnn
 # MIT License.
@@ -11,9 +11,9 @@
 #
 # Update: 22/09/2021
 #
-# coding: utf-8
+# -*- coding: utf-8 -*-
 #
-# -*- -*- -*- -*- -*- -*- -*- -*- -*- -*-
+# ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 
 import sys, urllib3, os, chromedriver_binary
 
