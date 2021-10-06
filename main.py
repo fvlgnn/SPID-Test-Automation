@@ -214,7 +214,7 @@ def main():
                     try:
                         WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Username"]')))
                     except TimeoutException:
-                       logme(f"TEST_{test:03} - Timeout SPID Validator IdP", "skipped")
+                       logme(f"TEST_{test:03} - Timeout SPID Validator IdP", "warning")
                        # TODO aggiungi test in lista per essere rieseguito al termine del ciclo base, run true/false diventa inutile
                        # run = False
                        pass
@@ -351,7 +351,8 @@ def main():
                         logme(f"TEST_{test:03} [AuthnRequestID: {auth_req_id}]\nTest description: {expected_result}{spid_log_msg}\n{spid_log_msg}Incorrect expected page (Title page: {title_page})\n", "not passed")
 
                 except NoSuchElementException as err:
-                    logme(f"TEST_{test:03} - {err.splitlines()[0]}", "skipped")
+                    err_msg = str(err).splitlines()[0]
+                    logme(f"TEST_{test:03} - {err_msg}", "warning")
                     # TODO aggiungi test in lista per essere rieseguito al termine del ciclo base, run true/false diventa inutile
                     # run = False
                     pass
