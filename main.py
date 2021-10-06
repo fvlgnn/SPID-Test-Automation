@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# -*- coding: utf-8 -*-
+
 # ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 #
 # Copyright (c) 2021 Gianni Favilli @fvlgnn
@@ -10,8 +12,6 @@
 # Date: 14/06/2021
 #
 # Update: 22/09/2021
-#
-# -*- coding: utf-8 -*-
 #
 # ---- ---- ---- ---- ---- ---- ---- ---- ---- ----
 
@@ -272,6 +272,7 @@ def main():
                     sleep(delay * 2)
                     expected_result = driver.find_element_by_class_name("test-description").text
                     key_result = expected_result.split(" ")[-1].lower()
+                    auth_req_id = driver.find_element_by_xpath('//input[@placeholder="AuthnRequestID"]').get_attribute('value')
                     sleep(delay)
 
                     #TODO aggiungere azione per premre il pulsante di test eseguito
@@ -316,7 +317,7 @@ def main():
                             spid_log_msg = f"\nSPID Level set for test: {spid_level}"
                         if key_result == "ok" or key_result == "request.":
                             if title_page == target_page_title or title_page == target_unauthorized_title:
-                                logme(f"TEST_{test:03}\nTest description: {expected_result}{spid_log_msg}\nResult: Web App (Title page: {title_page})\n", "passed")
+                                logme(f"TEST_{test:03} [AuthnRequestID: {auth_req_id}]\nTest description: {expected_result}{spid_log_msg}\nResult: Web App (Title page: {title_page})\n", "passed")
                                 #NOTE PERSONALIZZAZIONE. Da modificare in base alla propria webapp
                                 if logout:
                                     if title_page == target_page_title:
@@ -339,13 +340,13 @@ def main():
                                             pass
                                 #NOTE fine PERSONALIZZAZIONE.
                             else:
-                                logme(f"TEST_{test:03}\nTest description: {expected_result}{spid_log_msg}\nTitle page: {title_page}\n", 'not passed')
+                                logme(f"TEST_{test:03} [AuthnRequestID: {auth_req_id}]\nTest description: {expected_result}{spid_log_msg}\nTitle page: {title_page}\n", 'not passed')
                         else:
                             error_message = driver.find_element_by_id("kc-error-message").text.splitlines()[0]
-                            logme(f"TEST_{test:03}\nTest description: {expected_result}{spid_log_msg}\nResult description: {error_message}\n", "passed")
+                            logme(f"TEST_{test:03} [AuthnRequestID: {auth_req_id}]\nTest description: {expected_result}{spid_log_msg}\nResult description: {error_message}\n", "passed")
                     except NoSuchElementException:
                         print("sono qui")
-                        logme(f"TEST_{test:03}\nTest description: {expected_result}{spid_log_msg}\n{spid_log_msg}Incorrect expected page (Title page: {title_page})\n", "not passed")
+                        logme(f"TEST_{test:03} [AuthnRequestID: {auth_req_id}]\nTest description: {expected_result}{spid_log_msg}\n{spid_log_msg}Incorrect expected page (Title page: {title_page})\n", "not passed")
 
                 except NoSuchElementException as err:
                     logme("TEST " + str(test) + " " + str(err).splitlines()[0], "error")
