@@ -7,7 +7,7 @@
 # Copyright (c) 2021 Gianni Favilli @fvlgnn
 # MIT License.
 #
-# Description: Crawler test automation for SPID SAML Check
+# Description: Test automation crawler for SPID SAML Check
 #
 # Date: 14/06/2021
 #
