@@ -214,8 +214,10 @@ def main():
                     try:
                         WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Username"]')))
                     except TimeoutException:
-                       logme(f"TEST {test} - Timeout SPID Validator IdP", "error")
-                       run = False
+                       logme(f"TEST_{test:03} - Timeout SPID Validator IdP", "skipped")
+                       # TODO aggiungi test in lista per essere rieseguito al termine del ciclo base, run true/false diventa inutile
+                       # run = False
+                       pass
 
                     sleep(delay)
                     driver.find_element_by_xpath('//input[@placeholder="Username"]').click()
@@ -349,8 +351,10 @@ def main():
                         logme(f"TEST_{test:03} [AuthnRequestID: {auth_req_id}]\nTest description: {expected_result}{spid_log_msg}\n{spid_log_msg}Incorrect expected page (Title page: {title_page})\n", "not passed")
 
                 except NoSuchElementException as err:
-                    logme("TEST " + str(test) + " " + str(err).splitlines()[0], "error")
-                    run = False
+                    logme(f"TEST_{test:03} - {err.splitlines()[0]}", "skipped")
+                    # TODO aggiungi test in lista per essere rieseguito al termine del ciclo base, run true/false diventa inutile
+                    # run = False
+                    pass
             
                 driver.quit()
 
