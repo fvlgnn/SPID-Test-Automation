@@ -183,6 +183,7 @@ def main():
                 chrome_options.add_argument("start-maximized")
                 chrome_options.add_argument("ignore-certificate-errors-spki-list")
                 chrome_options.add_argument("ignore-certificate-errors")
+                chrome_options.add_argument("lang=it")
                     
                 if is_container:
                                   
@@ -274,7 +275,10 @@ def main():
                     sleep(delay * 2)
                     expected_result = driver.find_element_by_class_name("test-description").text
                     key_result = expected_result.split(" ")[-1].lower()
-                    auth_req_id = driver.find_element_by_xpath('//input[@placeholder="AuthnRequestID"]').get_attribute('value')
+                    if test in [16, 17]:
+                        auth_req_id = "n/a"
+                    else:
+                        auth_req_id = driver.find_element_by_xpath('//input[@placeholder="AuthnRequestID"]').get_attribute('value')
                     sleep(delay)
 
                     #TODO aggiungere azione per premre il pulsante di test eseguito
@@ -352,7 +356,7 @@ def main():
 
                 except NoSuchElementException as err:
                     err_msg = str(err).splitlines()[0]
-                    logme(f"TEST_{test:03} [SKIPPED] - {err_msg}", "warning")
+                    logme(f"TEST_{test:03} [SKIPPED] - {err_msg}\n", "warning")
                     # TODO aggiungi test in lista per essere rieseguito al termine del ciclo base, run true/false diventa inutile
                     # run = False
                     pass
