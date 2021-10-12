@@ -71,7 +71,7 @@ Eseguire lo script passando o meno i seguenti argomenti. Nel caso non vengano pa
     --fiscal-number FISCAL_NUMBER
                             Codice fiscale con prefisso TINIT- dell'utente di test (default: TINIT-GDASDV00A01H501J)
     --email EMAIL           Email dell'utente di test (default: spid.tech@agid.gov.it)
-    --level LEVEL           Livello SPID. Usa 1, 2 o 3 (default: 1)
+    --level LEVEL           Livello minimo di SPID richiesto dal SP per i test (94, 95, 96). Usa 1, 2 o 3 (default: 1)
     --delay DELAY           Tempo tra un'azione e l'altra (default: 0.4)
     --logout LOGOUT         True, forza il logout se la sessione è attiva (default: true)
     --container CONTAINER

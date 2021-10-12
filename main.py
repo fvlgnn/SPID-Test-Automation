@@ -62,7 +62,7 @@ parser.add_argument('--target-unauthorized', type=str, default='Errore - Utente 
 parser.add_argument('--custom-user', type=str, default='false', help="True modifica CF e Email nella Response come --cf e --email, False come da test.json", required=False)
 parser.add_argument('--fiscal-number', type=str, default='TINIT-GDASDV00A01H501J', help="Codice fiscale con prefisso TINIT- dell'utente di test", required=False)
 parser.add_argument('--email', type=str, default='spid.tech@agid.gov.it', help="Email dell'utente di test", required=False)
-parser.add_argument('--level', type=int, default=1, help="Livello SPID. Usa 1, 2 o 3", required=False)
+parser.add_argument('--level', type=int, default=1, help="Livello minimo di SPID richiesto dal SP per i test (94, 95, 96). Usa 1, 2 o 3", required=False)
 
 parser.add_argument('--delay', type=float, default=0.4, help="Tempo tra un'azione e l'altra", required=False)
 parser.add_argument('--logout', type=str, default='true', help="True, forza il logout se la sessione è attiva", required=False)
@@ -307,8 +307,10 @@ def crawler(tests):
             try:
                 spid_log_msg = ""
                 if test in range(94,97):
-                    spid_log_msg = f"\nSPID Level set for test: {spid_level}"
-                if key_result == "ok" or key_result == "request.":
+                    spid_log_msg = f"\nMinimum SPID Level set for test: {spid_level}"
+                    if test >= (93 + spid_level):
+                        key_result = "ok"
+                if key_result == "ok":
                     if title_page == target_page_title or title_page == target_unauthorized_title:
                         logme(f"TEST_{test:03} [AuthnRequestID: {auth_req_id}]\nTest description: {expected_result}{spid_log_msg}\nResult: Web App (Title page: {title_page})\n", "passed")
                         #NOTE PERSONALIZZAZIONE. Da modificare in base alla propria webapp
@@ -338,7 +340,7 @@ def crawler(tests):
                     error_message = driver.find_element_by_id("kc-error-message").text.splitlines()[0]
                     logme(f"TEST_{test:03} [AuthnRequestID: {auth_req_id}]\nTest description: {expected_result}{spid_log_msg}\nResult description: {error_message}\n", "passed")
             except NoSuchElementException:
-                logme(f"TEST_{test:03} [AuthnRequestID: {auth_req_id}]\nTest description: {expected_result}{spid_log_msg}\n{spid_log_msg}Incorrect expected page (Title page: {title_page})\n", "not passed")
+                logme(f"TEST_{test:03} [AuthnRequestID: {auth_req_id}]\nTest description: {expected_result}{spid_log_msg}\n{spid_log_msg}\nIncorrect expected page (Title page: {title_page})\n", "warning")
 
         except NoSuchElementException as err:
             skipped.append(test)
