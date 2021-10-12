@@ -60,6 +60,7 @@ Eseguire lo script passando o meno i seguenti argomenti. Nel caso non vengano pa
                             Test da escludere (es. 5 6 7). Di default i test che AgID non verifica (default: [5, 6, 7, 50, 101, 102])
     --custom-test CUSTOM_TEST [CUSTOM_TEST ...]
                             Esegue solo i test nella lista (es. 1 32 94 95 96 111) (default: None)
+    --force FORCE           True, riesegue i test saltati per problemi non riferiti alla validazione (default: true)
     --url URL               URL di partenza, la webapp con integrato il login con SPID (default: https://localhost:8443)
     --meta META             URL del metadata del tuo SP (default: https://localhost:8443/spid-sp-metadata)
     --target TARGET         HTML <title> della pagina di destinazione (default: TestSpidWebAppLoggedIn)
