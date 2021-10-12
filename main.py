@@ -362,6 +362,7 @@ def main():
         logme(f"version_id: {version_id}")
         logme(f"variables by: {('ARG', 'ENV')[use_env_var]}")
         logme(f"tests: {tests}")
+        logme(f"force: {force}")
         logme(f"siteurl: {siteurl}")
         logme(f"metadata: {metadata}")
         logme(f"target_page_title: {target_page_title}")
