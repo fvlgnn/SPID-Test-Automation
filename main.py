@@ -274,8 +274,10 @@ def crawler(tests):
                 sleep(delay)
                 driver.find_element_by_xpath('//input[@placeholder="fiscalNumber"]').clear()
                 sleep(delay)
-                driver.find_element_by_xpath('//input[@placeholder="fiscalNumber"]').send_keys(fiscal_number)
-                sleep(delay * 2)
+                for f in range(len(fiscal_number)):
+                    driver.find_element_by_xpath('//input[@placeholder="fiscalNumber"]').send_keys(fiscal_number[f])
+                    sleep(0.1)
+                sleep(delay)
 
                 driver.execute_script("window.scrollTo(0, 1800)")
                 sleep(delay)
@@ -283,8 +285,10 @@ def crawler(tests):
                 sleep(delay)
                 driver.find_element_by_xpath('//input[@placeholder="email"]').clear()
                 sleep(delay)
-                driver.find_element_by_xpath('//input[@placeholder="email"]').send_keys(email)
-                sleep(delay * 2)
+                for e in range(len(email)):
+                    driver.find_element_by_xpath('//input[@placeholder="email"]').send_keys(email[e])
+                    sleep(0.1)
+                sleep(delay)
 
                 driver.execute_script("window.scrollTo(0, 0)")
                 sleep(delay)
