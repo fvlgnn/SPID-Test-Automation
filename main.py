@@ -306,8 +306,10 @@ def crawler(tests):
             
             try:
                 spid_log_msg = ""
+                spid_log_error = ""
                 if test in range(94,97):
                     spid_log_msg = f"\nMinimum SPID Level set for test: {spid_level}"
+                    spid_log_error = ". ATTENTION! Check the minimum SPID level set on Service Provider."
                     if test >= (93 + spid_level):
                         key_result = "ok"
                 if key_result == "ok":
@@ -335,7 +337,7 @@ def crawler(tests):
                                     pass
                         #NOTE fine PERSONALIZZAZIONE.
                     else:
-                        logme(f"TEST_{test:03} [AuthnRequestID: {auth_req_id}]\nTest description: {expected_result}{spid_log_msg}\nTitle page: {title_page}\n", 'not passed')
+                        logme(f"TEST_{test:03} [AuthnRequestID: {auth_req_id}]\nTest description: {expected_result}{spid_log_msg}{spid_log_error}\nTitle page: {title_page}\n", 'not passed')
                 else:
                     error_message = driver.find_element_by_id("kc-error-message").text.splitlines()[0]
                     logme(f"TEST_{test:03} [AuthnRequestID: {auth_req_id}]\nTest description: {expected_result}{spid_log_msg}\nResult description: {error_message}\n", "passed")
