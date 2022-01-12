@@ -192,6 +192,8 @@ def crawler(tests):
             sleep(delay * 2)
             driver.find_element_by_partial_link_text("Entra con SPID").click()
             sleep(delay)
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+            sleep(delay)
             driver.find_element_by_id("zocial-spid-tester").click()
             sleep(delay)
             #NOTE fine PERSONALIZZAZIONE.
