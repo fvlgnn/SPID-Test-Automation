@@ -186,15 +186,15 @@ def crawler(tests):
 
             #NOTE PERSONALIZZAZIONE. Da modificare in base alla propria webapp
             sleep(delay)
-            driver.find_element_by_xpath("//html").click()
+            driver.find_element(By.XPATH, "//html").click()
             sleep(delay)
-            driver.find_element_by_xpath('//a[@href="#spid"]').click()
+            driver.find_element(By.XPATH, '//a[@href="#spid"]').click()
             sleep(delay * 2)
-            driver.find_element_by_partial_link_text("Entra con SPID").click()
+            driver.find_element(By.PARTIAL_LINK_TEXT, "Entra con SPID").click()
             sleep(delay)
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
             sleep(delay)
-            driver.find_element_by_id("zocial-spid-tester").click()
+            driver.find_element(By.ID, "zocial-spid-tester").click()
             sleep(delay)
             #NOTE fine PERSONALIZZAZIONE.
 
@@ -206,64 +206,64 @@ def crawler(tests):
                 pass
 
             sleep(delay)
-            driver.find_element_by_xpath('//input[@placeholder="Username"]').click()
+            driver.find_element(By.XPATH, '//input[@placeholder="Username"]').click()
             sleep(delay)
-            driver.find_element_by_xpath('//input[@placeholder="Username"]').send_keys("validator")
+            driver.find_element(By.XPATH, '//input[@placeholder="Username"]').send_keys("validator")
             sleep(delay)
-            driver.find_element_by_xpath('//input[@placeholder="Password"]').click()
+            driver.find_element(By.XPATH, '//input[@placeholder="Password"]').click()
             sleep(delay)
-            driver.find_element_by_xpath('//input[@placeholder="Password"]').send_keys("validator")
+            driver.find_element(By.XPATH, '//input[@placeholder="Password"]').send_keys("validator")
             sleep(delay)
-            driver.find_element_by_xpath("//button[text()='Login']").click()
+            driver.find_element(By.XPATH, "//button[text()='Login']").click()
             sleep(delay)
 
             #NOTE Aggiornamento del Metadata SP
             try:
-                driver.find_element_by_id("Worksave").is_displayed()                
+                driver.find_element(By.ID, "Worksave").is_displayed()                
                 if test == 1:
-                    driver.find_element_by_class_name("worksave-img-new").click()
+                    driver.find_element(By.CLASS_NAME, "worksave-img-new").click()
                     sleep(delay * 2)
                     driver.switch_to.alert.accept()
                     sleep(delay * 3)
-                    driver.find_element_by_xpath("//a[text()='Metadata SP']").click()
+                    driver.find_element(By.XPATH, "//a[text()='Metadata SP']").click()
                     sleep(delay * 3)
-                    driver.find_element_by_partial_link_text("Download").click()
+                    driver.find_element(By.PARTIAL_LINK_TEXT, "Download").click()
                     sleep(delay)
-                    driver.find_element_by_xpath('//input[@class="metadata"]').send_keys(metadata)
+                    driver.find_element(By.XPATH, '//input[@class="metadata"]').send_keys(metadata)
                     sleep(delay)
-                    driver.find_element_by_xpath("//button[text()='Download']").click()
+                    driver.find_element(By.XPATH, "//button[text()='Download']").click()
                 else:
-                    driver.find_element_by_class_name("worksave-img-continue").click() 
+                    driver.find_element(By.CLASS_NAME, "worksave-img-continue").click() 
             except NoSuchElementException:
                 sleep(delay * 3)
-                driver.find_element_by_xpath("//a[text()='Metadata SP']").click()
+                driver.find_element(By.XPATH, "//a[text()='Metadata SP']").click()
                 sleep(delay * 3)
-                driver.find_element_by_partial_link_text("Download").click()
+                driver.find_element(By.PARTIAL_LINK_TEXT, "Download").click()
                 sleep(delay)
-                driver.find_element_by_xpath('//input[@class="metadata"]').send_keys(metadata)
+                driver.find_element(By.XPATH, '//input[@class="metadata"]').send_keys(metadata)
                 sleep(delay)
-                driver.find_element_by_xpath("//button[text()='Download']").click()
+                driver.find_element(By.XPATH, "//button[text()='Download']").click()
                 pass
 
             sleep(delay * 3)
-            driver.find_element_by_xpath("//a[text()='Response']").click()
+            driver.find_element(By.XPATH, "//a[text()='Response']").click()
             sleep(delay * 3)
-            driver.find_element_by_partial_link_text("Check Response").click()
+            driver.find_element(By.PARTIAL_LINK_TEXT, "Check Response").click()
             sleep(delay)
 
             sleep(delay)
-            driver.find_element_by_id("react-select-2--value").click()
+            driver.find_element(By.ID, "react-select-2--value").click()
             sleep(delay)
-            driver.find_element_by_xpath('//input[@id="response-select"]').send_keys(f"{test}.")
+            driver.find_element(By.XPATH, '//input[@id="response-select"]').send_keys(f"{test}.")
             sleep(delay)
-            driver.find_element_by_xpath('//input[@id="response-select"]').send_keys(Keys.TAB)
+            driver.find_element(By.XPATH, '//input[@id="response-select"]').send_keys(Keys.TAB)
             sleep(delay * 2)
-            expected_result = driver.find_element_by_class_name("test-description").text
+            expected_result = driver.find_element(By.CLASS_NAME, "test-description").text
             key_result = expected_result.split(" ")[-1].lower()
             if test in [16, 17]:
                 auth_req_id = "n/a"
             else:
-                auth_req_id = driver.find_element_by_xpath('//input[@placeholder="AuthnRequestID"]').get_attribute('value')
+                auth_req_id = driver.find_element(By.XPATH, '//input[@placeholder="AuthnRequestID"]').get_attribute('value')
             sleep(delay)
 
             #TODO aggiungere azione per premre il pulsante di test eseguito
@@ -272,23 +272,23 @@ def crawler(tests):
 
                 driver.execute_script("window.scrollTo(0, 1800)")
                 sleep(delay)
-                driver.find_element_by_xpath('//input[@placeholder="fiscalNumber"]').click()
+                driver.find_element(By.XPATH, '//input[@placeholder="fiscalNumber"]').click()
                 sleep(delay)
-                driver.find_element_by_xpath('//input[@placeholder="fiscalNumber"]').clear()
+                driver.find_element(By.XPATH, '//input[@placeholder="fiscalNumber"]').clear()
                 sleep(delay)
                 for f in range(len(fiscal_number)):
-                    driver.find_element_by_xpath('//input[@placeholder="fiscalNumber"]').send_keys(fiscal_number[f])
+                    driver.find_element(By.XPATH, '//input[@placeholder="fiscalNumber"]').send_keys(fiscal_number[f])
                     sleep(0.1)
                 sleep(delay)
 
                 driver.execute_script("window.scrollTo(0, 1800)")
                 sleep(delay)
-                driver.find_element_by_xpath('//input[@placeholder="email"]').click()
+                driver.find_element(By.XPATH, '//input[@placeholder="email"]').click()
                 sleep(delay)
-                driver.find_element_by_xpath('//input[@placeholder="email"]').clear()
+                driver.find_element(By.XPATH, '//input[@placeholder="email"]').clear()
                 sleep(delay)
                 for e in range(len(email)):
-                    driver.find_element_by_xpath('//input[@placeholder="email"]').send_keys(email[e])
+                    driver.find_element(By.XPATH, '//input[@placeholder="email"]').send_keys(email[e])
                     sleep(0.1)
                 sleep(delay)
 
@@ -296,7 +296,7 @@ def crawler(tests):
                 sleep(delay)
 
             sleep(delay)
-            driver.find_element_by_xpath('//input[@type="submit"]').click()
+            driver.find_element(By.XPATH, '//input[@type="submit"]').click()
             sleep(delay)
 
             sleep(delay * 4)                
@@ -323,9 +323,9 @@ def crawler(tests):
                                 try:
                                     WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, '//button[@id="dropdownMenuButton"]')))
                                     sleep(delay)
-                                    driver.find_element_by_xpath('//button[@id="dropdownMenuButton"]').click()
+                                    driver.find_element(By.XPATH, '//button[@id="dropdownMenuButton"]').click()
                                     sleep(delay)
-                                    driver.find_element_by_xpath("//a[text()='Logout']").click()
+                                    driver.find_element(By.XPATH, "//a[text()='Logout']").click()
                                     sleep(delay * 2)
                                 except TimeoutException:
                                     pass
@@ -333,7 +333,7 @@ def crawler(tests):
                                 try:
                                     WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, '//a[@id="logout"]')))
                                     sleep(delay)
-                                    driver.find_element_by_xpath('//a[@id="logout"]').click()
+                                    driver.find_element(By.XPATH, '//a[@id="logout"]').click()
                                     sleep(delay * 2)
                                 except TimeoutException:
                                     pass
@@ -341,7 +341,7 @@ def crawler(tests):
                     else:
                         logme(f"TEST_{test:03} [AuthnRequestID: {auth_req_id}]\nTest description: {expected_result}{spid_log_error}{spid_log_msg}\nTitle page: {title_page}\n", 'not passed')
                 else:
-                    error_message = driver.find_element_by_id("kc-error-message").text.splitlines()[0]
+                    error_message = driver.find_element(By.ID, "kc-error-message").text.splitlines()[0]
                     logme(f"TEST_{test:03} [AuthnRequestID: {auth_req_id}]\nTest description: {expected_result}{spid_log_msg}\nResult description: {error_message}\n", "passed")
             except NoSuchElementException:
                 logme(f"TEST_{test:03} [AuthnRequestID: {auth_req_id}]\nTest description: {expected_result}{spid_log_msg}\n{spid_log_msg}\nIncorrect expected page (Title page: {title_page})\n", "warning")
