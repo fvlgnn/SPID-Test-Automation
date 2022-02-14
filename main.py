@@ -351,6 +351,12 @@ def crawler(tests):
             err_msg = str(err).splitlines()[0]
             logme(f"TEST_{test:03} [SKIPPED] - {err_msg}\n", "warning")
             pass
+
+        except Exception as exc:
+            skipped.append(test)
+            exc_msg = str(exc).splitlines()[0]
+            logme(f"TEST_{test:03} [SKIPPED] - {exc_msg}\n", "warning")
+            pass
     
         driver.quit()
 
